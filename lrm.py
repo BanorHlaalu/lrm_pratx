@@ -14,7 +14,7 @@ import time
 import datetime
 import os
 import glob
-from gpiozero import LED
+# from gpiozero import LED
 import pickle
 import lz4.frame
 from lrmimage import LrmImage
@@ -27,7 +27,7 @@ import matplotlib.pyplot as plt
 import matplotlib.cm as cm
 
 '''CONSTANTS'''
-LED_PIN = 21
+# LED_PIN = 21
 
 '''V2 resolutions (3280,2464) (1920,1080) (1640,1232) (1640,922) (1280,720)  (640,480)'''
 DEFAULT_RESOLUTION = (3280, 2464)
@@ -72,6 +72,7 @@ def append_slash(path):
 
 def get_parent_directory(path):
     """ Get the parent directory of a given path """
+    # Not applicable to any kind of file path
     isFilePath = path[-4] == '.' and not (path[-1] == '/')
 
     if isFilePath:
@@ -118,16 +119,16 @@ class LRM:
         self.lastSaveFileFullPath = None
         self.lastCaptureDurationSeconds = None
         self.logFileFullPath = None
-        self.led = None
+        # self.led = None
         self.lastBfImage = None
         self.lastBetaImage = None
 
         self._gainSet = None
         self._shutterSet = None
 
-        if self.led == None:
-            self.led = LED(LED_PIN)
-            self.led.off()
+        # if self.led == None:
+        #     self.led = LED(LED_PIN)
+        #     self.led.off()
         self.info = {}
 
     def __setup_beta(self, camera, gain=None, shutterUs=None):
@@ -209,7 +210,7 @@ class LRM:
         time.sleep(2)
 
     def __setup_brightfield(self, camera, gain=None, shutterUs=None):
-        """Start up the camera with settings optimized for beta imaging
+        """Start up the camera with settings optimized for brightfield
         gain: analog gain
         shutteUs: shutter speed in microseconds
         """
@@ -492,7 +493,7 @@ class LRM:
         """
 
         # Make sure the LED is off just in case+
-        self.led.off()
+        # self.led.off()
 
         # Make destination directory if it doesn't exist
         check_or_make_directory(fullPath)
@@ -538,7 +539,7 @@ class LRM:
         """
 
         # Make sure the LED is off just in case
-        self.led.off()
+        # self.led.off()
 
         # Make destination directory if it doesn't exist
         check_or_make_directory(fullPath)
@@ -600,7 +601,7 @@ class LRM:
         """
 
         # Make sure LED is on
-        self.led.on()
+        # self.led.on()
 
         # Make destination directory if it doesn't exist
         check_or_make_directory(fullPath)
@@ -649,7 +650,7 @@ class LRM:
             Image.fromarray(imageU16).save(bfOutFileFullPath)
 
         # Turn LED off
-        self.led.off()
+        # self.led.off()
 
     def is_camera_settled(self, camera):
         """Check if the camera autoexposure mode has settled on a gain and shutter setting
@@ -699,7 +700,7 @@ class LRM:
         """
 
         # Turn on LED
-        self.led.on()
+        # self.led.on()
 
         # Start up camera 
         camera = picamera.PiCamera()
@@ -715,7 +716,7 @@ class LRM:
         lastGain, lastShutterUs = self.wait_for_camera_settled(camera)
 
         # Turn off LED
-        self.led.off()
+        # self.led.off()
 
         # Close the camera
         camera.close()
