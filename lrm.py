@@ -122,7 +122,6 @@ class LRM:
         # self.led = None
         self.lastBfImage = None
         self.lastBetaImage = None
-
         self._gainSet = None
         self._shutterSet = None
 
