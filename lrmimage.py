@@ -3,10 +3,9 @@ import lz4
 import lz4.frame
 import pickle
 import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import glob
-
-matplotlib.use('TkAgg')
 
 class LrmFile:
     """Class that writes compressed LRM image and meta data to pickle file"""
@@ -130,7 +129,7 @@ class LrmImage:
 
 
     def compress(self, frame):
-
+        print("This is indented")
 
     def load(self, file):
         """ Load beta images from file
@@ -174,7 +173,7 @@ class LrmImage:
         imageLZ4 = lz4.frame.compress(self.image, return_bytearray=True, store_size=False)
 
         # Pack everything into dictionary
-        imageDict = {**{'meta': self.info}, **{'image' : imageLZ4 }}s
+        imageDict = {**{'meta': self.info}, **{'image' : imageLZ4 }}
 
         # Add .beta extension to all files
         if not file[-4:] == 'beta':

@@ -18,7 +18,7 @@ import time
 
 
 # File-related Settings
-baseDir = './data/'
+baseDir = './output/'
 experimentDir='one-brightfield'
 experimentDataPath = baseDir + experimentDir
 bfFileName = 'bf-0'
