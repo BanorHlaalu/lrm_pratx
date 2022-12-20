@@ -7,21 +7,22 @@ During each loop it:
 	captures 1 brightfield image
 	captures 1 beta image of betaSecondsPerImage total duration time
 
-rev 2
+Severin Lustenberger
+Adapted from:
 Justin Klein
 Stanford University
 Department of Radiation Oncology
 2018
 '''
 from lrm import LRM
-import time
-
+from datetime import datetime
 
 # File-related Settings
 baseDir = './output/'
-experimentDir='one-brightfield'
+experimentDir='one_brightfield'
 experimentDataPath = baseDir + experimentDir
-bfFileName = 'bf-0'
+timestamp = datetime.strftime(datetime.today(),format="%y%m%d_%H%M%S")
+bfFileName = f"{timestamp}_bf"
 
 # Initialize LRM class
 LRM = LRM()
@@ -30,11 +31,15 @@ LRM = LRM()
 bfGain,bfShutter = LRM.get_brightfield_exposure()
 
 # Override brightfield shutter duration if so desired
-bfShutter=10000
+bfShutter=1000
 
 # Announce
-print("Capturing single brightfield image. Shutter = " + str(bfShutter) + ' ms')
+print(f"Capturing single brightfield image. Shutter = {str(bfShutter)} ms")
 
 # Capture brightfield 
-LRM.capture_brightfield(experimentDataPath,bfFileName, 1, bfGain, bfShutter)
+LRM.capture_brightfield(fullPath=experimentDataPath,
+						filePrefix=bfFileName,
+						numberImages=5,
+						analogGain=bfGain,
+						exposureDurationUs=bfShutter)
 LRM.preview_last(True)
